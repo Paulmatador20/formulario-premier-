@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedidos PREMIER</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="LOGO_PREMIER.png" alt="PREMIER" class="logo">
+            </div>
+            <div class="header-text">
+                <h1>PEDIDOS</h1>
+                <p>Formulario de ingreso de pedidos – PREMIER</p>
+            </div>
+        </header>
+
+        <!-- CONTENIDO -->
+        <main class="main">
+            <form id="form-pedido" class="card" novalidate>
+                <h2 class="section-title">Datos del vendedor</h2>
+
+                <!-- VENDEDOR -->
+                <div class="field">
+                    <label for="vendedor">Vendedor *</label>
+                    <select id="vendedor" name="vendedor" required>
+                        <option value="">Selecciona un vendedor</option>
+                        <option value="ESTEFANY ZEVALLOS">ESTEFANY ZEVALLOS</option>
+                        <option value="PAUL ARELLANO">PAUL ARELLANO</option>
+                        <option value="LEONARDO">LEONARDO</option>
+                        <option value="HUAMAN">HUAMAN</option>
+                        <option value="OFICINA - APOYO LEONARDO">OFICINA - APOYO LEONARDO</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Correo del vendedor *</label>
+                
+                    <div class="email-options">
+                
+                        <label class="email-option">
+                            <input type="radio" name="correo_sel" value="estefany_zr@hotmail.com">
+                            <span>estefany_zr@hotmail.com</span>
+                        </label>
+                
+                        <label class="email-option">
+                            <input type="radio" name="correo_sel" value="leonardopremier94@gmail.com">
+                            <span>leonardopremier94@gmail.com</span>
+                        </label>
+                
+                        <label class="email-option">
+                            <input type="radio" name="correo_sel" value="colchones.urbanspring@gmail.com">
+                            <span>colchones.urbanspring@gmail.com</span>
+                        </label>
+                
+                        <label class="email-option">
+                            <input type="radio" name="correo_sel" value="springurban065@gmail.com">
+                            <span>springurban065@gmail.com</span>
+                        </label>
+
+                
+                        <label class="email-option">
+                            <input type="radio" name="correo_sel" value="otro">
+                            <span>Otro…</span>
+                        </label>
+                
+                    </div>
+                
+                    <!-- Input que aparece solo si eligen “Otros” -->
+                    <input 
+                        type="email" 
+                        id="correo_otro" 
+                        placeholder="Ingresa correo personalizado…" 
+                        class="hidden-field"
+                    >
+                
+                    <!-- Campo final donde se guarda el correo real -->
+                    <input type="hidden" id="correo_vendedor" name="correo_vendedor" required>
+                </div>
+                
+
+                <h2 class="section-title">Datos del cliente</h2>
+
+                <!-- CLIENTE -->
+                <div class="field">
+                    <label for="cliente">Cliente *</label>
+                    <input
+                        type="text"
+                        id="cliente"
+                        name="cliente"
+                        placeholder="Nombre del cliente"
+                        required
+                    />
+                </div>
+
+                <!-- TELÉFONO -->
+                <div class="field">
+                    <label for="telefono_cliente">Teléfono de contacto DEL CLIENTE *</label>
+                    <input
+                        type="tel"
+                        id="telefono_cliente"
+                        name="telefono_cliente"
+                        placeholder="Ej: 987654321"
+                        required
+                    />
+                </div>
+                <!-- TELÉFONO DE LA AGENCIA  -->
+                <div class="field">
+                    <label for="telefono_agencia">Teléfono de AGENCIA *</label>
+                    <input
+                        type="tel"
+                        id="telefono_agencia"
+                        name="telefono_agencia"
+                        placeholder="Ej: 987654321"
+                        required
+                    />
+                </div>
+                <!-- DIRECCIÓN -->
+                <div class="field address-wrapper">
+                    <label for="direccion">Dirección DE TIENDA O AGENCIA*</label>
+
+                    <input
+                        type="text"
+                        id="direccion"
+                        name="direccion"
+                        placeholder="Escribe la dirección…"
+                        autocomplete="off"
+                        required
+                    />
+
+                    <!-- contenedor de sugerencias -->
+                    <div id="suggestions" class="suggestions-box"></div>
+
+                    <!-- lat, lng -->
+                    <input type="hidden" id="direccion_lat" name="direccion_lat">
+                    <input type="hidden" id="direccion_lng" name="direccion_lng">
+                </div>
+
+
+
+                <h2 class="section-title">Detalle del pedido</h2>
+
+                <!-- CONSTRUCTOR DE PRODUCTOS -->
+                <div class="product-builder card-light">
+                    <div class="field-group">
+                        <div class="field">
+                            <label>Cantidad *</label>
+                            <input type="number" id="p_cantidad" min="1" placeholder="1" >
+                        </div>
+
+                        <div class="field">
+                            <label>Modelo *</label>
+                            <input type="text" id="p_modelo" placeholder="Ej: CRETA PREMIER" >
+                        </div>
+
+                <div class="field">
+                    <label for="p_marca">Marca *</label>
+
+                    <div class="combo-wrapper">
+                        <input 
+                            type="text" 
+                            id="p_marca"
+                            placeholder="Selecciona o escribe…" 
+                            autocomplete="off"
+                           
+                        >
+
+                        <span class="combo-icon" onclick="toggleLista('marcas-lista')">▼</span>
+
+                        <div id="marcas-lista" class="combo-list">
+                            <div onclick="seleccionarValor('p_marca', 'PREMIER')">PREMIER</div>
+                            <div onclick="seleccionarValor('p_marca', 'ASTRAL')">ASTRAL</div>
+                            <div onclick="seleccionarValor('p_marca', 'DREAMFLEX')">DREAMFLEX</div>
+                            <div onclick="seleccionarValor('p_marca', 'KAMAS')">KAMAS</div>
+                            <div onclick="seleccionarValor('p_marca', 'MF TOP')">MF TOP</div>
+                        </div>
+                    </div>
+                </div>
+
+                        <div class="field">
+                            <label for="p_medida">Medida *</label>
+
+                            <div class="combo-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="p_medida"
+                                    placeholder="Selecciona o escribe…" 
+                                    autocomplete="off"
+                                  
+                                >
+
+                                <span class="combo-icon" onclick="toggleLista('medidas-lista')">▼</span>
+
+                                <div id="medidas-lista" class="combo-list">
+                                    <div onclick="seleccionarValor('p_medida', '1 PLZ')">1 PLZ</div>
+                                    <div onclick="seleccionarValor('p_medida', '1.5 PLZ')">1.5 PLZ</div>
+                                    <div onclick="seleccionarValor('p_medida', '2 PLZ')">2 PLZ</div>
+                                    <div onclick="seleccionarValor('p_medida', 'QUEEN')">QUEEN</div>
+                                    <div onclick="seleccionarValor('p_medida', 'KING SIZE')">KING SIZE</div>
+                                    <div onclick="seleccionarValor('p_medida', '4 PLZ')">4 PLZ</div>
+                                </div>
+                            </div>
+                        </div>
+
+                       <div class="field">
+                            <label for="p_color">Color *</label>
+
+                            <div class="combo-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="p_color"
+                                    placeholder="Selecciona o escribe…" 
+                                    autocomplete="off"
+                                  
+                                >
+
+                                <span class="combo-icon" onclick="toggleLista('colores-lista')">▼</span>
+
+                                <div id="colores-lista" class="combo-list">
+                                    <div onclick="seleccionarValor('p_color', 'CLAROS')">CLAROS</div>
+                                    <div onclick="seleccionarValor('p_color', 'OSCUROS')">OSCUROS</div>
+                                    <div onclick="seleccionarValor('p_color', 'VARIADOS')">VARIADOS</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="field">
+                            <label>Garantía (años) *</label>
+                            <input type="number" id="p_garantia" min="1" placeholder="4" >
+                        </div>
+
+                        <div class="field">
+                            <label>Almohada *</label>
+                            <select id="p_almohada">
+                                <option value="CON">CON almohada</option>
+                                <option value="SIN">SIN almohada</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Observación</label>
+                            <input
+                                type="text"
+                                id="p_observacion"
+                                placeholder="Ej: Entrega urgente / cliente crédito / cambio de color"
+                            >
+                        </div>
+
+                        <div class="field">
+                            <label>Precio (S/)</label>
+                            <input type="number" id="p_precio" step="0.01" placeholder="730">
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn primary" onclick="agregarProducto()">
+                            + Agregar producto
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TABLA DE PRODUCTOS -->
+                <h3 class="section-title">Productos añadidos</h3>
+
+                <table class="tabla-productos" id="tablaProductos">
+                    <thead>
+                        <tr>
+                            <th>Cant</th>
+                            <th>Modelo</th>
+                            <th>Marca</th>
+                            <th>Medida</th>
+                            <th>Color</th>
+                            <th>Garantía</th>
+                            <th>Almohada</th>
+                            <th>Precio</th>
+                            <th>Observación</th>
+                            <th>Quitar</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <!-- CAMPO OCULTO DONDE SE GUARDA TODO -->
+                            <input type="hidden" name="productos_json" id="productos_json">
+
+                        <div class="field field-half">
+                            <label>Total del pedido (S/)</label>
+                            <input
+                                type="number"
+                                id="total_aprox"
+                                name="total_aprox"
+                                readonly
+                                class="readonly-field"
+                                placeholder="S/ 0.00"
+                            />
+                        </div>
+
+                <div class="field">
+                    <label for="fecha_despacho">Fecha de despacho solicitada *</label>
+
+                    <input 
+                        type="date" 
+                        id="fecha_despacho" 
+                        name="fecha_despacho"
+                        required
+                    >
+                </div>
+
+            
+                <div class="field">
+                <label>Tipo de pago *</label>
+
+                <div class="pago-options">
+
+                    <label class="pago-item">
+                        <input type="radio" name="tipo_pago" value="Contado">
+                        <span>Al contado</span>
+                    </label>
+
+                    <label class="pago-item">
+                        <input type="radio" name="tipo_pago" value="Crédito">
+                        <span>Crédito</span>
+                    </label>
+
+                    <label class="pago-item">
+                        <input type="radio" name="tipo_pago" value="Letras">
+                        <span>Letras</span>
+                    </label>
+
+                </div>
+
+                    <!-- DÍAS DE PAGO (solo para crédito) -->
+                <div id="pago_credito" class="hidden-field-group">
+                        <label>Días de pago *</label>
+                        <input type="number" id="dias_pago" placeholder="Ej: 30" min="1">
+                    </div>
+
+                    <!-- DETALLES DE LETRAS (solo para letras) -->
+                    <div id="pago_letras" class="hidden-field-group">
+
+                        <label>Cantidad de letras *</label>
+                        <input type="number" id="cantidad_letras" placeholder="Ej: 3" min="1">
+
+                        <label>Días entre letras *</label>
+                        <input type="number" id="dias_entre_letras" placeholder="Ej: 30" min="1">
+                    </div>
+
+                </div>
+
+
+                <!-- INFO ADICIONAL -->
+                <div class="field">
+                    <label for="info_adicional">Información adicional</label>
+
+                    <textarea 
+                        id="info_adicional" 
+                        name="info_adicional" 
+                        placeholder="Condiciones especiales, tiempos de entrega, notas internas…"
+                        rows="3"
+                    ></textarea>
+
+                    <!-- SUBIR ARCHIVOS -->
+                    <div class="archivo-uploader">
+                        <label class="archivo-label" for="archivo_adjunto">
+                            📎 Adjuntar archivos (imágenes, PDF, etc.)
+                        </label>
+
+                        <input 
+                            type="file" 
+                            id="archivo_adjunto" 
+                            name="archivos[]" 
+                            accept="image/*,.pdf,.doc,.docx" 
+                            multiple
+                        >
+                    </div>
+
+                    <!-- Vista previa de imágenes -->
+                    <div id="preview_archivos" class="preview-container"></div>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="actions actions-split">
+                    <button type="reset" class="btn secondary btn-left">Limpiar</button>
+                    <button type="submit" class="btn primary btn-right">Registrar pedido</button>
+                </div>
+                
+
+                <!-- MENSAJE DE CONFIRMACIÓN -->
+                <p id="mensaje-guardado" class="success-message" hidden>
+                    Pedido registrado (simulado). Más adelante aquí se conectará con la base de datos y el PDF.
+                </p>
+            </form>
+        </main>
+
+        <footer class="footer">
+            <small>© PREMIER – Sistema de pedidos (versión interfaz)</small>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+
+
+    <!-- MODAL DE ÉXITO -->
+<div id="modal_exito" class="modal-exito">
+    <div class="modal-contenido">
+        <div class="icono">✔</div>
+        <h3>Pedido registrado</h3>
+        <p>El pedido ha sido registrado correctamente.</p>
+        <button id="btn_modal_ok" class="btn-primary">OK</button>
+    </div>
+</div>
+
+</body>
+</html>
